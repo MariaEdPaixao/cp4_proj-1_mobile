@@ -3,6 +3,6 @@
 import axios from "axios"
 
 export default async function getUsers() {
-    const data = await axios.get("https://jsonplaceholder.typicode.com/users");
-    return data
+    const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+    return response.data
 }
