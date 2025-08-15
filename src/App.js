@@ -10,6 +10,22 @@ export default function App() {
         queryFn: getUsers
     })
 
+    if (isLoading) {
+        return (
+            <View style={styles.center}>
+                <ActivityIndicator size="large" />
+                <Text>Carregando usuários...</Text>
+            </View>
+        )
+    }
+
+    if (isError) {
+        <View style={styles.center}>
+            <ActivityIndicator size="large" />
+            <Text>Erro ao carregar usuários!</Text>
+        </View>
+    }
+
 
     return (
         <SafeAreaView>
