@@ -1,15 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import QueryClientProvider from './src/QueryClientProvider';
-import App from './src/App';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+// Carrega automaticamente todas as rotas da pasta "app" e monta a navegação
 
-export default function Main() {
-  return (
-    <QueryClientProvider>
-      <SafeAreaProvider>
-        <App />
-      </SafeAreaProvider>
-    </QueryClientProvider>
-  );
+import { ExpoRoot } from "expo-router";
+
+export default function App() {
+  const ctx = require.context("./app");
+  return <ExpoRoot context={ctx} />;
 }
