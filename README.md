@@ -16,13 +16,14 @@ O objetivo do projeto é implementar a listagem de dados utilizando **TanStack Q
 git clone https://github.com/MariaEdPaixao/cp4_proj-1_mobile.git
 
 # Acesse a pasta do projeto
-cd cp4_proj-1_mobile.git
+cd cp4_proj-1_mobile
 
 # Instale as dependências
 npm install
 
 # Execute o projeto
 npm start
+```
 
 ---
 
