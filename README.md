@@ -1,6 +1,6 @@
 # Projeto de Listagem de Dados
  
-O objetivo do projeto é implementar a listagem de dados utilizando **TanStack Query (React Query)** para gerenciamento de estados assíncronos.
+O objetivo do projeto é implementar a listagem de dados utilizando **TanStack Query (React Query)** para gerenciamento de estados.
 
 ## Tecnologias Utilizadas
 - React Native
