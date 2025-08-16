@@ -9,7 +9,7 @@ O objetivo do projeto é implementar a listagem de dados utilizando **TanStack Q
 - Axios (para consumo de API)
 - Expo router (navegação)
 
-## Como executar o projeto = passo a passo
+## Como executar o projeto 
 
 ```bash
 # Clone o repositório
