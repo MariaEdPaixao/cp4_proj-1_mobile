@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import getUsers from "../api/users";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -14,7 +14,18 @@ export default function ListUsers() {
         queryFn: getUsers
     })
 
-const [tooltip, setTooltip] = useState("");
+    const [tooltip, setTooltip] = useState("");
+
+    // páginação dos dados
+    // setando a página - começando pela 1°
+    const [page, setPage] = useState(1)
+    const nPage = 3; // 3 users por pág
+
+    //setando inicio e fim da página | e claro, recortando dos dados na integra para a paginação
+    const startIndex = (page - 1) * nPage;
+    const endIndex = startIndex + nPage;
+    const currentUsers = data?.slice(startIndex, endIndex); // passando esse recorte dos dados para o flatlist
+
 
     if (isLoading) {
         return (
@@ -28,7 +39,7 @@ const [tooltip, setTooltip] = useState("");
     if (isError) {
         return (
             <View style={styles.center}>
-                <Text style={{color: 'red'}}>Erro ao carregar usuários!</Text>
+                <Text style={{ color: 'red' }}>Erro ao carregar usuários!</Text>
             </View>
         )
     }
@@ -38,20 +49,20 @@ const [tooltip, setTooltip] = useState("");
             <View style={styles.header}>
                 <Text style={styles.titlePage}>Usuários</Text>
                 <View style={styles.icons}>
-                    <Pressable
+                    <TouchableOpacity
                         onPress={() => router.push("/")}
                         onPressIn={() => setTooltip("Voltar para Home")}
                         onPressOut={() => setTooltip("")}
                     >
                         <MaterialIcons name="home" size={28} color="#4F46E5" />
-                    </Pressable>
-                    <Pressable
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         onPress={refetch}
                         onPressIn={() => setTooltip("Recarregar lista")}
                         onPressOut={() => setTooltip("")}
                     >
                         <MaterialIcons name="refresh" size={28} color="#4F46E5" />
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -61,7 +72,7 @@ const [tooltip, setTooltip] = useState("");
 
             <FlatList
                 style={{ width: '100%' }}
-                data={data}
+                data={currentUsers}
                 refreshing={isFetching}
                 onRefresh={refetch}
                 renderItem={({ item }) => (
@@ -83,6 +94,28 @@ const [tooltip, setTooltip] = useState("");
                     </View>
                 )}
             />
+            <View style={styles.pagination}>
+                <TouchableOpacity
+                    onPress={() => setPage(prev => prev - 1)}
+                    disabled={page === 1}
+                    style={styles.paginationButton}
+                >
+                    <Text>
+                        <MaterialIcons name="chevron-left" size={32} color="#fff" />
+                    </Text>
+                </TouchableOpacity>
+
+                <Text style={styles.pageText}>Página {page}</Text>
+
+                <TouchableOpacity
+                    onPress={() => setPage(prev => prev + 1)}
+                    disabled={endIndex >= data.length}
+                    style={styles.paginationButton}
+                >
+                    <MaterialIcons name="chevron-right" size={32} color="#fff" />
+                </TouchableOpacity>
+            </View>
+
         </SafeAreaView>
     )
 }
@@ -158,5 +191,19 @@ const styles = StyleSheet.create({
     titlePage: {
         fontSize: 30,
         fontWeight: "600",
+    },
+    pagination: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 2
+    },
+    paginationButton: {
+        backgroundColor: '#4F46E5',
+        padding: 10,
+        borderRadius: 5
+    },
+    pageText: {
+        alignSelf: 'center'
     }
+
 });
